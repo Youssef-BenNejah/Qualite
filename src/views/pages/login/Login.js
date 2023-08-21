@@ -1,86 +1,89 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import './Login.css'
+import logo from "../../../assets/images/logo_intell.png"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
+import { auth } from '../../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+export default function Login() {
+  const navigate = useNavigate ()
+
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+navigate("/dashboard")
+
+      })
+      .catch((error) => {
+        console.log(error.code)
+        console.log(error.message)
+
+        toast.error(error.code, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+      });
+  };
+
+
+
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
+
+    <div className="container">
+
+
+      <div className="screen">
+
+        <div className="screen__content">
+        <img src={logo} alt="logo" className='logo' />
+
+          <form className="login">
+             
+            <div className="login__field">
+              <i className="login__icon fas fa-user"></i>
+              <input type="text" className="login__input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="login__field">
+              <i className="login__icon fas fa-lock"></i>
+              <input type="password" className="login__input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <button className="button login__submit" onClick={signIn}>
+              <span className="button__text">Log In Now</span>
+              <i className="button__icon fas fa-chevron-right"></i>
+            </button>
+          </form>
+          <div className="social-login">
+            <h3>log in via</h3>
+            <div className="social-icons">
+             
+            </div>
+          </div>
+        </div>
+        <div className="screen__background">
+          <span className="screen__background__shape screen__background__shape4"></span>
+          <span className="screen__background__shape screen__background__shape3"></span>
+          <span className="screen__background__shape screen__background__shape2"></span>
+          <span className="screen__background__shape screen__background__shape1"></span>
+        </div>
+      </div>
+      <ToastContainer />
+
     </div>
+
+
   )
 }
-
-export default Login

@@ -1,0 +1,23 @@
+.widget_1{
+    background-color: #03045e;
+}
+.widget_2{
+    background-color: #023ea8;
+}
+
+.widget_3{
+    background-color: #0096c7;
+}
+
+.widget_4{
+    background-color: #48cae4;
+}
+.widget_1__text,.widget_1__title,.widget_2__text,.widget_2__title,.widget_3__title,.widget_3__text,.widget_4__text,.widget_4__title{
+    color: white;
+}
+.widget_1__title,.widget_2__title,.widget_3__title,.widget_4__title{
+margin-top: 15px;
+font-weight: 500;
+}
+
+

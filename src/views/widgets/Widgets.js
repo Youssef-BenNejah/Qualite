@@ -64,6 +64,7 @@ const Widgets = () => {
                 text="Lorem ipsum dolor sit amet enim."
               />
             </CCol>
+            
             <CCol xs={12} sm={6} lg={3}>
               <CWidgetStatsB
                 className="mb-4"
